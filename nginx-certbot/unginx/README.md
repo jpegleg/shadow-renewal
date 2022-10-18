@@ -58,7 +58,7 @@ To avoid down time, it is best to have a second server in a different geographic
 and ideally a network solution "above" both that publishes A records for which ever is up and online. And if desired, the 
 DNS/GSLB system might even sync renewal timers and point traffic over to the other region when a region does a renewal. It
 can accomplish this because when the NGINX service comes online, that NGINX PORT returning a 200 OK to a GSLB health check 
-is a sign that a renewal is in progress. NGINX needs public traffic to come back to it for a moment during the renwal process
+is a sign that a renewal is in progress. NGINX needs public traffic to come back to it for a moment during the renewal process
 to confirm DNS identity, but after that, we don't need to run it. So we need A records to point to the node with the NGINX
 up, then when NGINX is pkilled by the crontab, the GSLB knows that the "drop" means it is time to publish the A record for
 the other region only. This will allow the cron to sleep for 63 seconds, enough time for the DNS A record to be republished
