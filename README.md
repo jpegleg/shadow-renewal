@@ -1,4 +1,4 @@
-# shadow-renewal
+# shadow-renewal 🌚 ᨖ
 
 This git repository is for a collection of ACME protocol related configurations, scripts, and code.
 
