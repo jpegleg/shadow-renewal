@@ -11,7 +11,7 @@ Running the real web services in docker but having NGINX and certbot at the host
 we can keep our `docker-compose.yml` file in `/root/` and then do the following:
 
 ```
-08 */12 * * * sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot -q renew && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
+08 */12 * * * sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot --non-interactive --non-interactive --nginx -d YOURDOMAINHERE -d ANOTHERDOMAINHERE && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
 
 ```
 
@@ -41,6 +41,8 @@ services:
 ```
 
 The section with `$example.com` would be the primary domain name used in the certbot renewal.
+
+Here is a manual interactive example. 
 
 ```
 certbot --nginx -d example.com -d example2.com
