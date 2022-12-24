@@ -23,8 +23,22 @@ sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot --non-interactive --agree-
 /usr/bin/pkill nginx
 ```
 
-The example crontab includes a `pkill nginx` if the renewal is successful, as the nginx process gets started by certbot
-and is only used for the purpose of certificate nenewal.
+The certbot action might further be moved into a separate script with a style like this:
+
+```
+sleep $(echo $RANDOM | cut -c2,3) && /usr/loca/sbin/renewer && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
+
+/usr/bin/pkill nginx
+```
+And then renwer is:
+
+```
+/usr/bin/certbot --non-interactive --agree-tos --nginx -d YOURDOMAINHERE -d ANOTHERDOMAINHERE
+```
+
+
+The example crontab includes a `pkill nginx` if the renewal is successful and then again anyway, as the nginx process gets started by certbot
+and is only used for the purpose of certificate nenewal. That is why it is unginx!
 
 The reason we are doing a docker-compose restart is because the certificate is then mounted into the containers that need it:
 
