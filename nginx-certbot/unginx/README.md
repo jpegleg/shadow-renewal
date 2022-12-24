@@ -11,8 +11,16 @@ Running the real web services in docker but having NGINX and certbot at the host
 we can keep our `docker-compose.yml` file in `/root/` and then do the following:
 
 ```
-08 */12 * * * sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot --non-interactive --agree-tos --nginx -d YOURDOMAINHERE -d ANOTHERDOMAINHERE && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
+08 */12 * * * root /usr/local/sbin/reup > /var/log/reup.log
 
+```
+
+And the `/usr/local/sbin/reup` file:
+
+```
+sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot --non-interactive --agree-tos --nginx -d YOURDOMAINHERE -d ANOTHERDOMAINHERE && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
+
+/usr/bin/pkill nginx
 ```
 
 The example crontab includes a `pkill nginx` if the renewal is successful, as the nginx process gets started by certbot
