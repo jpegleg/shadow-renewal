@@ -21,7 +21,7 @@ And the `/usr/local/sbin/reup` file:
 sleep $(echo $RANDOM | cut -c2,3) && 
 /usr/local/sbin/renewer
 
-newcert=$(find /etc/letsencrypt/live/ -name "fullchain.pem" -mtime -0 | wc -l)
+newcert=$(find /etc/letsencrypt/live/ -name "fullchain.pem" -mtime 0 | wc -l)
 
 if [ "$newcert" == "0" ]; then
   exit 0
