@@ -19,10 +19,19 @@ And the `/usr/local/sbin/reup` file:
 
 ```
 sleep $(echo $RANDOM | cut -c2,3) && 
-/usr/local/sbin/renewer &&
-cd /root/ && 
-/usr/bin/docker-compose restart
+/usr/local/sbin/renewer
+
+newcert=$(find /etc/letsencrypt/live/ -name "fullchain.pem" -mtime -0 | wc -l)
+
+if [ "$newcert" == "0" ]; then
+  exit 0
+else
+  cd /root/ && 
+  /usr/bin/docker-compose restart
+fi
+
 /usr/bin/pkill nginx
+
 ```
 
 And then renwer is:
