@@ -11,25 +11,20 @@ Running the real web services in docker but having NGINX and certbot at the host
 we can keep our `docker-compose.yml` file in `/root/` and then do the following:
 
 ```
-08 */12 * * * root /usr/local/sbin/reup > /var/log/reup.log
+37 13 * * * root /usr/local/sbin/reup > /var/log/reup.log 2>&1
 
 ```
 
 And the `/usr/local/sbin/reup` file:
 
 ```
-sleep $(echo $RANDOM | cut -c2,3) && /usr/bin/certbot --non-interactive --agree-tos --nginx -d YOURDOMAINHERE -d ANOTHERDOMAINHERE && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
-
+sleep $(echo $RANDOM | cut -c2,3) && 
+/usr/local/sbin/renewer &&
+cd /root/ && 
+/usr/bin/docker-compose restart
 /usr/bin/pkill nginx
 ```
 
-The certbot action might further be moved into a separate script with a style like this:
-
-```
-sleep $(echo $RANDOM | cut -c2,3) && /usr/loca/sbin/renewer && /usr/bin/pkill nginx && sleep 63 && cd ~ && /usr/bin/docker-compose restart
-
-/usr/bin/pkill nginx
-```
 And then renwer is:
 
 ```
