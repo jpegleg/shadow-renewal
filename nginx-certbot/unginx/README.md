@@ -11,7 +11,7 @@ Running the real web services in docker but having NGINX and certbot at the host
 we can keep our `docker-compose.yml` file in `/root/` and then do the following:
 
 ```
-37 13 * * * root /usr/local/sbin/reup > /var/log/reup.log 2>&1
+37 13 * * * /usr/local/sbin/reup > /var/log/reup.log 2>&1
 
 ```
 
