@@ -18,6 +18,8 @@ we can keep our `docker-compose.yml` file in `/root/` and then do the following:
 And the `/usr/local/sbin/reup` file:
 
 ```
+#!/usr/bin/env bash
+
 sleep $(echo $RANDOM | cut -c2,3) && 
 /usr/local/sbin/renewer
 
